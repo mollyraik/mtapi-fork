@@ -150,3 +150,7 @@ def _make_envelope(data):
 
 if __name__ == '__main__':
     app.run(use_reloader=False)
+
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
