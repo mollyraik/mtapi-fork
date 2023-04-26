@@ -52,12 +52,12 @@ class CustomJSONEncoder(JSONEncoder):
 app.json_encoder = CustomJSONEncoder
 
 mta = Mtapi(
-    app.config['MTA_KEY'],
-    app.config['STATIONS_FILE'],
-    max_trains=app.config['MAX_TRAINS'],
-    max_minutes=app.config['MAX_MINUTES'],
-    expires_seconds=app.config['CACHE_SECONDS'],
-    threaded=app.config['THREADED'])
+    app.config[os.environ.get('MTA_KEY')],
+    app.config[os.environ.get('STATIONS_FILE')],
+    max_trains=app.config[os.environ.get('MAX_TRAINS')],
+    max_minutes=app.config[os.environ.get('MAX_MINUTES')],
+    expires_seconds=app.config[os.environ.get('CACHE_SECONDS')],
+    threaded=app.config[os.environ.get('THREADED')])
 
 def cross_origin(f):
     @wraps(f)
@@ -67,7 +67,7 @@ def cross_origin(f):
         if app.config['DEBUG']:
             resp.headers['Access-Control-Allow-Origin'] = '*'
         elif 'CROSS_ORIGIN' in app.config:
-            resp.headers['Access-Control-Allow-Origin'] = app.config['CROSS_ORIGIN']
+            resp.headers['Access-Control-Allow-Origin'] = app.config[os.environ.get('CROSS_ORIGIN')]
 
         return resp
 
