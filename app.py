@@ -26,11 +26,13 @@ app.config.update(
 )
 
 _SETTINGS_ENV_VAR = 'MTAPI_SETTINGS'
-# _SETTINGS_DEFAULT_PATH = './settings.cfg'
+_SETTINGS_DEFAULT_PATH = './settings.cfg'
 if _SETTINGS_ENV_VAR in os.environ:
     app.config.from_envvar(_SETTINGS_ENV_VAR)
+elif os.path.isfile(_SETTINGS_DEFAULT_PATH):
+    app.config.from_pyfile(_SETTINGS_DEFAULT_PATH)
 else:
-    app.config.from_mapping(os.environ)
+    raise Exception('No configuration found! Create a settings.cfg file or set MTAPI_SETTINGS env variable.')
 
 # set debug logging
 if app.debug:
@@ -149,6 +151,3 @@ def _make_envelope(data):
 if __name__ == '__main__':
     app.run(use_reloader=False)
 
-@app.route('/favicon.ico')
-def favicon():
-    return app.send_static_file('favicon.ico')
