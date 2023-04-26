@@ -41,6 +41,10 @@ app.config['MTA_KEY'] = os.getenv('MTA_KEY')
 app.config['STATIONS_FILE'] = os.getenv('STATIONS_FILE')
 app.config['DEBUG'] = os.getenv('DEBUG')
 app.config['CROSS_ORIGIN'] = os.getenv('CROSS_ORIGIN')
+# app.config['MAX_TRAINS'] = os.getenv('MAX_TRAINS')
+# app.config['MAX_MINUTES'] = os.getenv('MAX_MINUTES')
+# app.config['CACHE_SECONDS'] = os.getenv('CACHE_SECONDS')
+# app.config['THREADED'] = os.getenv('THREADED')
 
 # set debug logging
 if app.debug:
