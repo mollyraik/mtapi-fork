@@ -15,7 +15,10 @@ from flask.json import JSONEncoder
 from datetime import datetime
 from functools import wraps, reduce
 import logging
-import os
+from dotenv import load_dotenv
+import os 
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config.update(
@@ -25,14 +28,19 @@ app.config.update(
     THREADED=True
 )
 
-_SETTINGS_ENV_VAR = 'MTAPI_SETTINGS'
-_SETTINGS_DEFAULT_PATH = './settings.cfg'
-if _SETTINGS_ENV_VAR in os.environ:
-    app.config.from_envvar(_SETTINGS_ENV_VAR)
-elif os.path.isfile(_SETTINGS_DEFAULT_PATH):
-    app.config.from_pyfile(_SETTINGS_DEFAULT_PATH)
-else:
-    raise Exception('No configuration found! Create a settings.cfg file or set MTAPI_SETTINGS env variable.')
+# _SETTINGS_ENV_VAR = 'MTAPI_SETTINGS'
+# # _SETTINGS_DEFAULT_PATH = './settings.cfg'
+# # if _SETTINGS_ENV_VAR in os.environ:
+# #     app.config.from_envvar(_SETTINGS_ENV_VAR)
+# # elif os.path.isfile(_SETTINGS_DEFAULT_PATH):
+# #     app.config.from_pyfile(_SETTINGS_DEFAULT_PATH)
+# # else:
+# #     raise Exception('No configuration found! Create a settings.cfg file or set MTAPI_SETTINGS env variable.')
+
+app.config['MTA_KEY'] = os.getenv('MTA_KEY')
+app.config['STATIONS_FILE'] = os.getenv('STATIONS_FILE')
+app.config['DEBUG'] = os.getenv('DEBUG')
+app.config['CROSS_ORIGIN'] = os.getenv('CROSS_ORIGIN')
 
 # set debug logging
 if app.debug:
